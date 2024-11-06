@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:get/get.dart';
 
 class HomeView extends StatefulWidget {
   @override
@@ -11,7 +12,7 @@ class HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('home'),
+        title: Text('home'.tr),
         actions: [
           IconButton(
               onPressed: () {

@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ocr/route/route_utils.dart';
 import 'package:ocr/route/routes.dart';
+import 'package:ocr/ui/translations/ui_translations.dart';
 import 'package:oktoast/oktoast.dart';
+import 'package:get/get.dart';
 
 void main() => runApp(AppDelegate());
 
@@ -21,9 +23,12 @@ class _AppDelegateState extends State<AppDelegate> {
             minTextAdapt: true,
             splitScreenMode: true,
             builder: (_, child) {
-              return MaterialApp(
+              return GetMaterialApp(
+                translations: UiTranslations(),
+                  locale: Get.deviceLocale,
+                  fallbackLocale: const Locale('en','US'),
                   debugShowCheckedModeBanner: true,
-                  title: 'MyApp',
+                  title: 'ocr'.tr,
                   theme: ThemeData(
                       primarySwatch: Colors.yellow,
                       textTheme: Typography.englishLike2018

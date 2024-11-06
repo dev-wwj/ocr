@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ocr/tab_view.dart';
+import 'package:ocr/ui/tab_view.dart';
 
 //
 // void main() {

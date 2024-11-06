@@ -6,7 +6,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
-import 'package:ocr/pages/text_recognition/vision_detecotr_views/painters/coordinates_translator.dart';
+import 'coordinates_translator.dart';
 
 class TextRecognizerSinglePainter extends CustomPainter {
   TextRecognizerSinglePainter(this.textElement, this.imageSize, this.rotation,

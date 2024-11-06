@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +34,7 @@ class _CameraViewState extends State<CameraView> {
   int _cameraIndex = -1;
   double _currentZoomLevel = 1.0;
   double _minAvailableZoom = 1.0;
-  double _maxAvailableZoom = 1.0;
+  double _maxAvailableZoom = 5.0;
   double _minAvailableExposureOffset = 0.0;
   double _maxAvailableExposureOffset = 0.0;
   double _currentExposureOffset = 0.0;
@@ -77,25 +78,29 @@ class _CameraViewState extends State<CameraView> {
     if (_controller == null) return Container();
     if (_controller?.value.isInitialized == false) return Container();
     return ColoredBox(
-      color: Colors.black,
+      color: Colors.grey,
       child: Stack(
         fit: StackFit.expand,
         children: <Widget>[
-          Center(
-            child: _changingCameraLens
-                ? const Center(
-                    child: Text('Changing camera lens'),
-                  )
-                : CameraPreview(
-                    _controller!,
-                    child: widget.customPaint,
-                  ),
+          Column(
+            children: [
+              Center(
+                child: _changingCameraLens
+                    ? const Center(
+                        child: Text('Changing camera lens'),
+                      )
+                    : CameraPreview(
+                        _controller!,
+                        child: widget.customPaint,
+                      ),
+              ),
+            ],
           ),
           // _backButton(),
-          _switchLiveCameraToggle(),
-          _detectionViewModeToggle(),
-          _zoomControl(),
-          _exposureControl(),
+          // _switchLiveCameraToggle(),
+          // _detectionViewModeToggle(),
+          // _zoomControl(),
+          // // _exposureControl(),
         ],
       ),
     );
@@ -129,7 +134,7 @@ class _CameraViewState extends State<CameraView> {
             heroTag: Object(),
             onPressed: widget.onDetectorViewModeChanged,
             backgroundColor: Colors.black54,
-            child: Icon(
+            child: const Icon(
               Icons.photo_library_outlined,
               size: 25,
             ),
@@ -178,6 +183,7 @@ class _CameraViewState extends State<CameraView> {
                     inactiveColor: Colors.white30,
                     onChanged: (value) async {
                       setState(() {
+                        print(value);
                         _currentZoomLevel = value;
                       });
                       await _controller?.setZoomLevel(value);
@@ -210,7 +216,7 @@ class _CameraViewState extends State<CameraView> {
         top: 40,
         right: 8,
         child: ConstrainedBox(
-          constraints: BoxConstraints(
+          constraints: const BoxConstraints(
             maxHeight: 250,
           ),
           child: Column(children: [
@@ -225,7 +231,7 @@ class _CameraViewState extends State<CameraView> {
                 child: Center(
                   child: Text(
                     '${_currentExposureOffset.toStringAsFixed(1)}x',
-                    style: TextStyle(color: Colors.white),
+                    style: const TextStyle(color: Colors.white),
                   ),
                 ),
               ),
@@ -260,12 +266,13 @@ class _CameraViewState extends State<CameraView> {
     _controller = CameraController(
       camera,
       // Set to ResolutionPreset.high. Do NOT set it to ResolutionPreset.max because for some phones does NOT work.
-      ResolutionPreset.high,
+      ResolutionPreset.low,
       enableAudio: false,
       imageFormatGroup: Platform.isAndroid
           ? ImageFormatGroup.nv21
           : ImageFormatGroup.bgra8888,
-      fps: 5
+      videoBitrate: 1,
+      fps: 10,
     );
     _controller?.initialize().then((_) {
       if (!mounted) {
@@ -276,7 +283,7 @@ class _CameraViewState extends State<CameraView> {
         _minAvailableZoom = value;
       });
       _controller?.getMaxZoomLevel().then((value) {
-        _maxAvailableZoom = value;
+        _maxAvailableZoom = min(_maxAvailableZoom, value);
       });
       _currentExposureOffset = 0.0;
       _controller?.getMinExposureOffset().then((value) {

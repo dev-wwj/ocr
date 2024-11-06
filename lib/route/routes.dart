@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ocr/scanner.dart';
-import 'package:ocr/tab_view.dart';
+import 'package:ocr/ui/pages/mine/settings_view.dart';
+import 'package:ocr/ui/scanner.dart';
+import 'package:ocr/ui/tab_view.dart';
 
 class Path {
 
   static const String tab = '/';
+  static const String settings = '/settings';
 
 }
 
@@ -15,6 +17,8 @@ class Routes {
     switch (settings.name) {
       case Path.tab:
         return pageRoute(TabView(), settings: settings);
+      case Path.settings:
+        return pageRoute(SettingsView(), settings: settings);
     }
 
     return pageRoute(Scaffold(

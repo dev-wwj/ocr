@@ -1,13 +1,13 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
-import 'package:ocr/pages/text_recognition/vision_detecotr_views/camera_view.dart';
-import 'package:ocr/pages/text_recognition/vision_detecotr_views/gallery_view.dart';
+import 'camera_view.dart';
+import 'gallery_view.dart';
 
 enum DetectorViewMode { liveFeed, gallery }
 
 class DetectorView extends StatefulWidget {
-  DetectorView({
+  const DetectorView({
     Key? key,
     required this.title,
     required this.onImage,

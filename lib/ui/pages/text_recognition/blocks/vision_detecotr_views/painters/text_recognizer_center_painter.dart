@@ -1,12 +1,9 @@
-import 'dart:io';
 import 'dart:ui';
-import 'dart:ui' as ui;
 
 import 'package:camera/camera.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
-import 'package:ocr/pages/vision_detecotr_views/painters/coordinates_translator.dart';
+import 'coordinates_translator.dart';
 
 class TextRecognizerCenterPainter extends CustomPainter {
   TextRecognizerCenterPainter(
@@ -40,13 +37,13 @@ class TextRecognizerCenterPainter extends CustomPainter {
 
 class TextRecognizerCenter extends StatefulWidget {
   TextRecognizerCenter(
-      {required this.offset,
+      {super.key, required this.offset,
       required this.imageSize,
       required this.rotation,
       required this.cameraLensDirection});
 
   @override
-  State<StatefulWidget> createState() => _TextRecognizerCenterState();
+  State<TextRecognizerCenter> createState() => _TextRecognizerCenterState();
 
   Offset offset;
   final Size imageSize;
